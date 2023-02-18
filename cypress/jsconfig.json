@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["ES6", "DOM"],
+    "types": ["node", "cypress"]
+  },
+  "include": [
+    "integration/**/*.js",
+    "support/**/*.js" ]
+}
