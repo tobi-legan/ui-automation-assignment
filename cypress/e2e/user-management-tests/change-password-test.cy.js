@@ -28,7 +28,7 @@ describe("Update ", () => {
         signUpApi.signUpRequest({
             email: details.email,
             password: details.password,
-            full_name: details.fullName,
+            full_name: details.password,
             username: details.userName,
             phone_number: details.phoneNumber,
         });
