@@ -22,7 +22,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v2
               with:
-               name: videos
+               name: screenshots
                path: cypress/screenshots/**/**/*.png
                retention-days: 5
             - name: for videos if any
