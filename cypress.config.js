@@ -1,5 +1,6 @@
 const { defineConfig } = require("cypress");
 const faker = require("@faker-js/faker");
+const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
     blockHosts: [],
@@ -18,7 +19,10 @@ module.exports = defineConfig({
     },
 
     e2e: {
-        setupNodeEvents(on, config) {},
+        setupNodeEvents(on, config) {
+            cypressSplit(on, config);
+            return config;
+        },
 
         baseUrl: "http://alphapay.netlify.app",
     },

@@ -1,13 +1,20 @@
 name: e2e-tests
 on: [push, pull_request]
 jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Cypress run
-        uses: cypress-io/github-action@v5
-        with:
-          command: npx cypress run
-          browser: chrome
+    cypress-run:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                containers: [1, 2, 3]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Cypress run
+              uses: cypress-io/github-action@v5
+              with:
+                  command: npx cypress run
+                  browser: chrome
+              env:
+                  SPLIT: ${{ strategy.job-total }}
+                  SPLIT_INDEX: ${{ strategy.job-index }}
