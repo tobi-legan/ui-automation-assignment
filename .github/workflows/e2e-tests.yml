@@ -19,12 +19,14 @@ jobs:
                   SPLIT: ${{ strategy.job-total }}
                   SPLIT_INDEX: ${{ strategy.job-index }}
             - name: for screenshots if any
+              if: always()
               uses: actions/upload-artifact@v2
               with:
                name: videos
                path: cypress/screenshots/**/**/*.png
                retention-days: 5
             - name: for videos if any
+              if: always()
               uses: actions/upload-artifact@v2
               with:
                name: videos
