@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./../../fixtures/constants/index";
+import { API_BASE_URL } from "../../fixtures/constants/index";
 
 export class SignInPage {
     emailTextField = () => cy.get('[name="email"]');
@@ -22,11 +22,19 @@ export class SignInPage {
             .as(interceptName);
     };
 
-    waitForLoginInterceptToReturnStatusCode = (interceptName, statusCode) => {
-        return cy
-            .wait(`@${interceptName}`, { timeout: 30000 })
+    waitForLoginInterceptToReturnStatusCode = (
+        interceptName,
+        statusCode,
+        validTest = true
+    ) => {
+        cy.wait(`@${interceptName}`, { timeout: 30000 })
             .its("response.statusCode")
             .should("eq", statusCode);
+        if (validTest === true) {
+            cy.get(`@${interceptName}`).then((intercept) => {
+                cy.wrap(intercept.response.body.data.access_token).as("token");
+            });
+        }
     };
 
     checkThatSignInPageIsOpen = () => {
@@ -50,7 +58,7 @@ export class SignInPage {
     };
 
     clickSignInButton = () => {
-        this.signInButton().click();
+        return this.signInButton().click();
     };
 
     checkErrorReturnedForEmptyEmailAndPassword = () => {
@@ -73,11 +81,11 @@ export class SignInPage {
     };
 
     inputEmail = (email) => {
-        this.emailTextField().type(email);
+        return this.emailTextField().type(email);
     };
 
     inputPassword = (password) => {
-        this.passwordTextField().type(password);
+        return this.passwordTextField().type(password);
     };
 
     signInValidFlow = (email, password, loginIntercept) => {

@@ -23,6 +23,14 @@ export const signUpTestData = {
         username: "",
         phoneNumber: "",
         email: "",
-        password: "",
+        password: "Password123$",
     },
+};
+
+export const updateProfileAndPasswordTest = {
+    email: "Merl.Kshlerin@c6qaaekn.mailosaur.net",
+    password: "Password123$",
+    fullName: "Ms. Brandi Hauck",
+    userName: "7067918846_Boyle",
+    phoneNumber: "13199362850",
 };

@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const faker = require("@faker-js/faker");
 
 module.exports = defineConfig({
     blockHosts: [],
@@ -17,14 +18,7 @@ module.exports = defineConfig({
     },
 
     e2e: {
-        setupNodeEvents(on, config) {
-            on("task", {
-                log(message) {
-                    console.log(message);
-                    return null;
-                },
-            });
-        },
+        setupNodeEvents(on, config) {},
 
         baseUrl: "http://alphapay.netlify.app",
     },

@@ -1,5 +1,6 @@
 import { HomePage, SignInPage } from "./../../support/pages";
 import { signInTestData } from "../../fixtures/constants";
+
 const homePage = new HomePage();
 const signInPage = new SignInPage();
 
@@ -33,7 +34,11 @@ describe("Sign In page tests", () => {
         );
         signInPage.interceptLoginRequest(loginIntercept);
         signInPage.clickSignInButton();
-        signInPage.waitForLoginInterceptToReturnStatusCode(loginIntercept, 404);
+        signInPage.waitForLoginInterceptToReturnStatusCode(
+            loginIntercept,
+            404,
+            false
+        );
         signInPage.checkThatErrorMessageIsDisplayed();
         signInPage.checkThatUserRemainsInLogInPage();
     });
