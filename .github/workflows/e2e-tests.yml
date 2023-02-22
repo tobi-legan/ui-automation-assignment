@@ -1,5 +1,5 @@
 name: e2e-tests
-on: [push, pull_request,worfklow_dispatch]
+on: [push, pull_request]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
