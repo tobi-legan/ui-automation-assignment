@@ -18,3 +18,15 @@ jobs:
               env:
                   SPLIT: ${{ strategy.job-total }}
                   SPLIT_INDEX: ${{ strategy.job-index }}
+            - name: for screenshots if any
+              uses: actions/upload-artifact@v2
+              with:
+               name: videos
+               path: cypress/screenshots/**/**/*.png
+               retention-days: 5
+            - name: for videos if any
+              uses: actions/upload-artifact@v2
+              with:
+               name: videos
+               path: cypress/videos/**/*.mp4
+               retention-days: 5
