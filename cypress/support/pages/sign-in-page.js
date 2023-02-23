@@ -72,6 +72,17 @@ export class SignInPage {
             .should("contain.text", "Provide a password please");
     };
 
+    checkErrorMessageForEmptyPassword = () => {
+        this.passwordTextField()
+            .siblings("div")
+            .should("contain.text", "Provide a password please");
+    };
+
+    checkErrorMessageForWrongEmailFormat = () => {
+        this.emailTextField()
+            .siblings("div")
+            .should("contain.text", "Provide a valid email please");
+    };
     checkThatUserRemainsInLogInPage = () => {
         cy.url().should("contain", "/auth/login");
     };

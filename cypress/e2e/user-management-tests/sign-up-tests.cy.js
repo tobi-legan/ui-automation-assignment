@@ -11,6 +11,7 @@ const signInApi = new SignInApi();
 
 const signUpInterceptName = "signUpIntercept";
 const getUserIntercept = "getUserIntercept";
+let details;
 describe("Check that user can go to the sign up page from the homepage", () => {
     it("To ensure that the sign in button in the homepage links to the sign in page", () => {
         homePage.visitHomePage();
@@ -20,18 +21,17 @@ describe("Check that user can go to the sign up page from the homepage", () => {
 
 describe("Sign up tests", () => {
     beforeEach(() => {
-        signUpPage.visitSignUpPage();
-        signUpPage.checkThatSignUpPageIsOpen();
-    });
-
-    it("Check that user can sign up successfully with correct values", () => {
-        const details = {
+        details = {
             fullName: faker.name.fullName(),
             userName: faker.internet.userName(faker.random.numeric(10)),
             phoneNumber: faker.random.numeric(11),
             email: faker.internet.email("", "", "c6qaaekn.mailosaur.net"),
         };
+        signUpPage.visitSignUpPage();
+        signUpPage.checkThatSignUpPageIsOpen();
+    });
 
+    it("Check that user can sign up successfully with correct values", () => {
         signUpPage.inputFullName(details.fullName);
         signUpPage.inputUserName(details.userName);
         signUpPage.inputPhoneNumber(details.phoneNumber);
@@ -59,6 +59,111 @@ describe("Sign up tests", () => {
         // check that user can login via the endpoint also with his new password
         signInApi.signIn(
             details.email,
+            signUpTestData.signUpValidTest.password
+        );
+    });
+
+    it("Check that user sees error when username already exists for another user", () => {
+        signUpPage.inputFullName(details.fullName);
+        signUpPage.inputUserName(
+            signUpTestData.signUpForDetailsthatAlreadyExist.username
+        );
+        signUpPage.inputPhoneNumber(details.phoneNumber);
+        signUpPage.inputEmail(details.email);
+        signUpPage.inputPassword(signUpTestData.signUpValidTest.password);
+        signUpPage.inputConfirmPassword(
+            signUpTestData.signUpValidTest.password
+        );
+        signUpPage.interceptSignUpRequest(signUpInterceptName);
+        signUpPage.clickCreateAccountButton();
+        signUpPage.waitForSignUpInterceptToReturnStatusCode(
+            signUpInterceptName,
+            400
+        );
+        signUpPage.errorMessageForWhenDataAlreadyExists();
+        signUpPage.checkThatUserRemainsInSignUpPageAfterErrorWithoutTheFormBeingCleared(
+            details.fullName,
+            signUpTestData.signUpForDetailsthatAlreadyExist.username,
+            details.phoneNumber,
+            details.email,
+            signUpTestData.signUpValidTest.password,
+            signUpTestData.signUpValidTest.password
+        );
+    });
+
+    it("Check that user sees error when email already exists for another user", () => {
+        signUpPage.inputFullName(details.fullName);
+        signUpPage.inputUserName(details.userName);
+        signUpPage.inputPhoneNumber(details.phoneNumber);
+        signUpPage.inputEmail(
+            signUpTestData.signUpForDetailsthatAlreadyExist.email
+        );
+        signUpPage.inputPassword(signUpTestData.signUpValidTest.password);
+        signUpPage.inputConfirmPassword(
+            signUpTestData.signUpValidTest.password
+        );
+        signUpPage.interceptSignUpRequest(signUpInterceptName);
+        signUpPage.clickCreateAccountButton();
+        signUpPage.waitForSignUpInterceptToReturnStatusCode(
+            signUpInterceptName,
+            400
+        );
+        signUpPage.errorMessageForWhenDataAlreadyExists();
+        signUpPage.checkThatUserRemainsInSignUpPageAfterErrorWithoutTheFormBeingCleared(
+            details.fullName,
+            details.userName,
+            details.phoneNumber,
+            signUpTestData.signUpForDetailsthatAlreadyExist.email,
+            signUpTestData.signUpValidTest.password,
+            signUpTestData.signUpValidTest.password
+        );
+    });
+
+    it("Check that user sees error when phone number already exists for another user", () => {
+        signUpPage.inputFullName(details.fullName);
+        signUpPage.inputUserName(details.userName);
+        signUpPage.inputPhoneNumber(
+            signUpTestData.signUpForDetailsthatAlreadyExist.phoneNumber
+        );
+        signUpPage.inputEmail(details.email);
+        signUpPage.inputPassword(signUpTestData.signUpValidTest.password);
+        signUpPage.inputConfirmPassword(
+            signUpTestData.signUpValidTest.password
+        );
+        signUpPage.interceptSignUpRequest(signUpInterceptName);
+        signUpPage.clickCreateAccountButton();
+        signUpPage.waitForSignUpInterceptToReturnStatusCode(
+            signUpInterceptName,
+            400
+        );
+        signUpPage.errorMessageForWhenDataAlreadyExists();
+        signUpPage.checkThatUserRemainsInSignUpPageAfterErrorWithoutTheFormBeingCleared(
+            details.fullName,
+            details.userName,
+            signUpTestData.signUpForDetailsthatAlreadyExist.phoneNumber,
+            details.email,
+            signUpTestData.signUpValidTest.password,
+            signUpTestData.signUpValidTest.password
+        );
+    });
+
+    it("Check that user sees error when password and confirm password are not the same", () => {
+        signUpPage.inputFullName(details.fullName);
+        signUpPage.inputUserName(details.userName);
+        signUpPage.inputPhoneNumber(
+            signUpTestData.signUpForDetailsthatAlreadyExist.phoneNumber
+        );
+        signUpPage.inputEmail(details.email);
+        signUpPage.inputPassword(signUpTestData.signUpValidTest.password);
+        signUpPage.inputConfirmPassword("Password123$4");
+        signUpPage.clickCreateAccountButton();
+        signUpPage.checkMessageWhenConfirmPasswordAndPasswordFieldDoNotMatch();
+        signUpPage.checkThatUserRemainsInSignUpPageAfterErrorWithoutTheFormBeingCleared(
+            details.fullName,
+            details.userName,
+            signUpTestData.signUpForDetailsthatAlreadyExist.phoneNumber,
+            details.email,
+            signUpTestData.signUpValidTest.password,
             signUpTestData.signUpValidTest.password
         );
     });

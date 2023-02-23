@@ -16,7 +16,10 @@ export class SettingsPage {
     changePasswordButton = () => cy.get("button").contains("Change Password");
     passwordUpdateSuccessfullyMessage = () =>
         cy.contains("Password updated successfully");
-
+    passwordUpdateWrongPasswordMessage = () =>
+        cy.contains("Invalid credentials");
+    passwordUpdateWhereUpdateNewPasswordAndOldPasswordAreTheSameMessageText =
+        () => cy.contains("This is an old password, please change it");
     interceptUpdateUserRequest = (interceptName) => {
         return cy
             .intercept("PATCH", `${API_BASE_URL}/auth/update`)
@@ -118,6 +121,43 @@ export class SettingsPage {
     checkThatSuccessMessageIsDisplayedAfterSuccessfulPasswordUpdate = () => {
         this.passwordUpdateSuccessfullyMessage().should("be.visible");
     };
+
+    checkThatErrorMessageIsDisplayedAfterFailedPasswordUpdateWhereOldPasswordIsWrong =
+        () => {
+            this.passwordUpdateWrongPasswordMessage().should("be.visible");
+        };
+
+    checkThatErrorMessageIsDisplayedAfterFailedPasswordUpdateWhereOldPasswordAndNewPasswordAreTheSame =
+        () => {
+            this.passwordUpdateWhereUpdateNewPasswordAndOldPasswordAreTheSameMessageText().should(
+                "be.visible"
+            );
+        };
+
+    checkMessageWhenUsernameFieldIsEmpty = () => {
+        this.userNameTextField()
+            .siblings("div")
+            .should("contain.text", "Provide a username please");
+    };
+
+    checkMessageWhenFullNameFieldIsEmpty = () => {
+        this.fullNameTextField()
+            .siblings("div")
+            .should("contain.text", "Provide your full name please");
+    };
+
+    checkMessageWhenoldPasswordFieldIsEmpty = () => {
+        this.oldPasswordText()
+            .siblings("div")
+            .should("contain.text", "Provide your old password please");
+    };
+
+    checkMessageWhenNewPasswordFieldIsEmpty = () => {
+        this.newPasswordText()
+            .siblings("div")
+            .should("contain.text", "Provide a password please");
+    };
+
     checkThatUserIsLoggedOut = () => {
         cy.url().should("contain", "/auth/login");
         cy.visit("/dashboard/settings/profile");
