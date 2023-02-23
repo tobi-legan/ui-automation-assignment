@@ -17,6 +17,12 @@ export class SignUpPage {
         cy.get(".password_icon").eq(1);
     messageDisplayedForSuccessfulSignUp = () =>
         cy.contains("Signup Successful");
+    errorMessageForWhenDataAlreadyExists = () =>
+        cy
+            .contains(
+                "A user with that phone number or email or username already exists"
+            )
+            .should("be.visible");
 
     visitSignUpPage = () => {
         cy.visit("/auth/signup");
@@ -120,5 +126,29 @@ export class SignUpPage {
 
     checkThatUserIsAutomaticallyLoggedInAfterAccountCreation = () => {
         cy.url().should("contain", "/dashboard/overview");
+    };
+
+    checkMessageWhenConfirmPasswordAndPasswordFieldDoNotMatch = () => {
+        this.confirmPasswordTextField()
+            .siblings("div")
+            .should("contain.text", "Both password need to be the same");
+    };
+
+    checkThatUserRemainsInSignUpPageAfterErrorWithoutTheFormBeingCleared = (
+        fullName,
+        username,
+        phoneNumber,
+        email,
+        password,
+        confirmPassword
+    ) => {
+        cy.url().should("contain", "/auth/signup");
+        this.fullNameTextField().should("have.attr", "value", fullName);
+        this.userNameTextField().should("have.attr", "value", username);
+        this.phoneNumberTextField().should("have.attr", "value", phoneNumber);
+        this.emailTextField().should("have.attr", "value", email);
+        this.passwordTextField()
+            .should("have.attr", "value", password)
+            .should("have.attr", "type", "password");
     };
 }

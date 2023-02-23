@@ -25,6 +25,14 @@ export const signUpTestData = {
         email: "",
         password: "Password123$",
     },
+
+    signUpForDetailsthatAlreadyExist: {
+        fullName: "Dr. Genevieve Wyman",
+        username: "6199958893.Haag",
+        phoneNumber: "92697951182",
+        email: "Heather46@c6qaaekn.mailosaur.net",
+        password: "Password123$",
+    },
 };
 
 export const updateProfileAndPasswordTest = {

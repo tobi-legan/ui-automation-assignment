@@ -25,6 +25,25 @@ describe("Sign In page tests", () => {
         signInPage.checkThatUserRemainsInLogInPage();
     });
 
+    it("Check that user sees valid error when password fields is empty", () => {
+        signInPage.inputEmail(
+            signInTestData.signIn_ValidEmailWrongPassword.email
+        );
+        signInPage.clickSignInButton();
+        signInPage.checkErrorMessageForEmptyPassword();
+        signInPage.checkThatUserRemainsInLogInPage();
+    });
+
+    it("Check that user sees valid error when email passed is in an invalid format", () => {
+        signInPage.inputEmail("asad1234");
+        signInPage.inputPassword(
+            signInTestData.signIn_ValidEmailWrongPassword.password
+        );
+        signInPage.clickSignInButton();
+        signInPage.checkErrorMessageForWrongEmailFormat();
+        signInPage.checkThatUserRemainsInLogInPage();
+    });
+
     it("Check that user sees valid error when email exists but password is incorrect", () => {
         signInPage.inputEmail(
             signInTestData.signIn_ValidEmailWrongPassword.email
