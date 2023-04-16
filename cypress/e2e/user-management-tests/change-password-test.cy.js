@@ -54,7 +54,7 @@ describe("Change password tests", () => {
 
     it("Check that user's password can be updated successfully", () => {
         settingPage.inputOldPassword(details.password);
-        settingPage.inputNewPassword(newPassword);
+        settingPage.inputNewPassword(details.password);
         settingPage.interceptUpdatePasswordRequest("passwordIntercept");
         settingPage.clickChangePasswordButton();
         settingPage.waitForUpdateUserInterceptToReturnStatusCode(

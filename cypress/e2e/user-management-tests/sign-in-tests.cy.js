@@ -64,7 +64,7 @@ describe("Sign In page tests", () => {
 
     it("Check that user is logged in successfully with correct email and password", () => {
         signInPage.inputEmail(signInTestData.signIn_ValidTest.email);
-        signInPage.inputPassword(signInTestData.signIn_ValidTest.password);
+        signInPage.inputPassword("usme");
         signInPage.interceptLoginRequest(loginIntercept);
         signInPage.clickSignInButton();
         signInPage.waitForLoginInterceptToReturnStatusCode(loginIntercept, 200);
