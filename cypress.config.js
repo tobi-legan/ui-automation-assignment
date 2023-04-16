@@ -11,7 +11,7 @@ module.exports = defineConfig({
     reportFilename: '[name].html',
     overwrite: true,
     html: true,
-    json: false,
+    json: true,
   },
     blockHosts: [],
     chromeWebSecurity: false,
