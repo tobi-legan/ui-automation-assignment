@@ -7,10 +7,10 @@ module.exports = defineConfig({
     reporterOptions: {
         useInlineDiffs: true,
         embeddedScreenshots: true,
-        reportDir: 'cypress/reports/mochawesome-report',
+        files: ["./mochawesome-report/*.json"],
         reportFilename: '[name].html',
-        overwrite: true,
-        html: true,
+        overwrite: false,
+        html: false,
         json: true,
     },
     blockHosts: [],
