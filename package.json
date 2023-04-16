@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "report:merge": "mochawesome-merge cypress/results/*.json -o cypress/report.json",
-    "report:generate": "marge cypress/report.json --charts true"
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "repository": {
     "type": "git",
