@@ -3,6 +3,16 @@ const faker = require("@faker-js/faker");
 const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
+    reporter: 'mochawesome',
+  reporterOptions: {
+    useInlineDiffs: true,
+    embeddedScreenshots: true,
+    reportDir: 'cypress/results',
+    reportFilename: '[name].html',
+    overwrite: true,
+    html: true,
+    json: true,
+  },
     blockHosts: [],
     chromeWebSecurity: false,
     defaultCommandTimeout: 8000,
