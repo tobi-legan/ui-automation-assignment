@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "report:merge": "mochawesome-merge mochawesome/results/*.json -o cypress/report.json",
+    "merge-report":"mochawesome-merge  cypress/reports/mocha/*.json > cypress/reports/report.json",
     "report:generate": "marge cypress/report.json --charts true"
   },
   "repository": {
